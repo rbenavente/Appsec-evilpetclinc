@@ -9,6 +9,7 @@ COPY evil /evil
 #0-day Virus included
 
 RUN curl https://wildfire.paloaltonetworks.com/publicapi/test/elf -o evil-WF
+COPY eicar ~/eicar.txt
 
 #Install vulnerable os level packages
 #Hashing out as it didn't install it originally....:  CMD apt-get install nmap nc
