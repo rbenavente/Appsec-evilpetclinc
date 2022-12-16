@@ -66,7 +66,7 @@ stage('Scan k8s manifest') {
 script { 
        docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
            try {
-               sh 'checkov -f files/deploy.yaml --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url https://api.eu.prismacloud.io  --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id rbenavente/evil.yaml --branch main'
+               sh 'checkov -f files/deploy.yml --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url https://api.eu.prismacloud.io  --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id rbenavente/evil.yaml --branch main'
                               junit skipPublishingChecks: true, testResults: 'results.xml'
               } catch (err) {
                               junit skipPublishingChecks: true, testResults: 'results.xml'
