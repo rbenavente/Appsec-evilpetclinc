@@ -1,0 +1,28 @@
+node {
+environment {
+    PRISMA_API_URL='https://api.eu.prismacloud.io'
+ }
+stage('Clone repository') {
+ checkout scm       
+
+ }
+
+ /// Optiona stage to check how Dockerfile scanning works
+ 
+  stage('Scan Dockerfile') {
+  script { 
+        docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
+             try {
+                sh 'checkov -f Dockerfile --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url https://api.eu.prismacloud.io  --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id rbenavente/evil.Dockerfile --branch main'
+                               junit skipPublishingChecks: true, testResults: 'results.xml'
+              } catch (err) {
+                               junit skipPublishingChecks: true, testResults: 'results.xml'
+                              throw err
+                            }
+   }  
+  }  
+    }
+ 
+   
+   
+  
