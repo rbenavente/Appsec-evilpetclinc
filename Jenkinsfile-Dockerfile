@@ -10,7 +10,7 @@ stage('Clone repository') {
  /// Optiona stage to check how Dockerfile scanning works
  
   stage('Scan Dockerfile') {
-  script { 
+    script { 
         docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
              try {
                 sh 'checkov -f Dockerfile --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url https://api.eu.prismacloud.io  --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id rbenavente/evil.Dockerfile --branch main'
@@ -19,10 +19,9 @@ stage('Clone repository') {
                                junit skipPublishingChecks: true, testResults: 'results.xml'
                               throw err
                             }
+    }  
    }  
-  }  
     }
- 
-   
-   
-  
+    
+  }
+    
